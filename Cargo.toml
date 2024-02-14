@@ -1,8 +1,25 @@
 [package]
 name = "editor-config"
+description = "Editorconfig implementation in Rust"
+repository = "https://github.com/Selyss/editor-config"
+license = "MIT"
+keywords = [
+  "editorconfig",
+  "configuration",
+  "config",
+  "environment",
+  "settings",
+]
+categories = [
+  "text-editors",
+  "config",
+  "parser-implementations",
+  "parsing",
+  "filesystem",
+]
+readme = "README.md"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
