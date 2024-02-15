@@ -27,6 +27,7 @@ mod tests {
     }
 
     #[test]
+    // parse the default editorconfig from the editorconfig website
     fn test_file_parse() {
         let editorconfig_path = "tests/test_data/.editorconfig";
         let editorconfig = EditorConfig::from_file(editorconfig_path).unwrap();
@@ -43,6 +44,34 @@ mod tests {
         assert_eq!(
             editorconfig.get_property("*.{js,py}", "charset"),
             Some(&String::from("utf-8"))
+        );
+        assert_eq!(
+            editorconfig.get_property("*.py", "indent_style"),
+            Some(&String::from("space"))
+        );
+        assert_eq!(
+            editorconfig.get_property("*.py", "indent_size"),
+            Some(&String::from("4"))
+        );
+        assert_eq!(
+            editorconfig.get_property("Makefile", "indent_style"),
+            Some(&String::from("tab"))
+        );
+        assert_eq!(
+            editorconfig.get_property("lib/**.js", "indent_style"),
+            Some(&String::from("space"))
+        );
+        assert_eq!(
+            editorconfig.get_property("lib/**.js", "indent_size"),
+            Some(&String::from("2"))
+        );
+        assert_eq!(
+            editorconfig.get_property("{package.json,.travis.yml}", "indent_style"),
+            Some(&String::from("space"))
+        );
+        assert_eq!(
+            editorconfig.get_property("{package.json,.travis.yml}", "indent_size"),
+            Some(&String::from("2"))
         );
     }
 }
