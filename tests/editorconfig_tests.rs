@@ -57,8 +57,8 @@ mod tests {
             Some(&String::from("true"))
         );
         assert_eq!(
-            editorconfig.get_property("*.js", "indent_style"),
-            Some(&String::from("space"))
+            editorconfig.get_property("*.{js,py}", "charset"),
+            Some(&String::from("utf-8"))
         );
     }
 }
