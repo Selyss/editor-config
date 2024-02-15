@@ -9,7 +9,7 @@ pub struct EditorConfig {
 
 impl EditorConfig {
     pub fn from_file(file_path: &str) -> Result<Self, String> {
-        let contents = fs::read_to_string(file_path).map_err(|e| e.to_string())?;
+        let contents: String = fs::read_to_string(file_path).map_err(|e| e.to_string())?;
         EditorConfig::from_str(&contents)
     }
     pub fn get_property(&self, section: &str, property: &str) -> Option<&String> {

@@ -4,6 +4,8 @@ use editor_config::parser::EditorConfig;
 
 fn main() {
     let editorconfig_path = "tests/test_data/.editorconfig";
+
+    // File must be provided
     let editorconfig = EditorConfig::from_file(editorconfig_path).unwrap();
 
     if let Some(indent_style) = editorconfig.get_property("*", "end_of_line") {
