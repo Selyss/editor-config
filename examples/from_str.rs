@@ -1,4 +1,4 @@
-//! An example of getting an editorconfig from a string
+//! Example of getting an editorconfig from a string
 
 use editor_config::parser::EditorConfig;
 
