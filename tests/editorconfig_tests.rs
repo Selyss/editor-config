@@ -74,4 +74,16 @@ mod tests {
             Some(&String::from("2"))
         );
     }
+    // INFO: invalid keys are implicitly none, since the user would need to request an invalid key
+    // to get an invalid key
+    #[test]
+    fn test_invalid_value() {
+        let editorconfig_str = r#"
+            [*]
+            indent_size = big
+        "#;
+
+        let editorconfig: EditorConfig = editorconfig_str.parse().unwrap();
+        assert_eq!(editorconfig.get_property("*", "indent_size"), None);
+    }
 }

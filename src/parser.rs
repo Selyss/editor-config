@@ -3,20 +3,6 @@ use std::collections::HashMap;
 use std::fs;
 use std::str::FromStr;
 
-#[allow(dead_code)]
-#[derive(Debug, PartialEq)]
-pub enum Section {
-    IndentStyle(String),
-    IndentSize(String), // can have value tab
-    TabWidth(u32),
-    EndOfLine(String),
-    Charset(String),
-    TrimTrailingWhitespace(bool),
-    InsertFinalNewline(bool),
-    MaxLineLength(String), // limited support
-                           // Root(bool),
-}
-
 pub struct EditorConfig {
     pub config: HashMap<String, HashMap<String, String>>,
 }
@@ -34,12 +20,34 @@ impl EditorConfig {
     }
 }
 
+// NOTE: invalid properties should never error.
+// https://github.com/editorconfig/editorconfig/wiki/How-to-create-an-EditorConfig-plugin#handling-unsupported-editorconfig-properties
 fn validate_property<'a>(property: &str, value: &'a String) -> Option<&'a String> {
     match property {
+        "indent_style" => match value.as_str() {
+            "tab" | "space" => Some(value),
+            _ => None,
+        },
+        "indent_size" => match value.as_str() {
+            "tab" => Some(value),
+            _ => value.parse::<u32>().ok().map(|_| value),
+        },
         "tab_width" => value.parse::<u32>().ok().map(|_| value),
+        "end_of_line" => match value.as_str() {
+            "lf" | "cr" | "crlf" => Some(value),
+            _ => None,
+        },
+        "charset" => match value.as_str() {
+            "latin1" | "utf-8" | "utf-8-bom" | "utf-16be" | "utf-16le" => Some(value),
+            _ => None,
+        },
         "trim_trailing_whitespace" | "insert_final_newline" | "root" => {
             value.parse::<bool>().ok().map(|_| value)
         }
+        "max_line_length" => match value.as_str() {
+            "off" => Some(value),
+            _ => value.parse::<u32>().ok().map(|_| value),
+        },
         _ => Some(value),
     }
 }
