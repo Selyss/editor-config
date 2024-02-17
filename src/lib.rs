@@ -1,8 +1,9 @@
-//! An [editorconfig]-parsing library
+//! An editorconfig parsing library.
 //!
-//! This crate serves as a thin wrapper around the editorconfig specification.
+//! This crate serves as a thin wrapper over the editorconfig specification.
 //!
-//! An example of getting an editorconfig property
+//! # Example
+//!
 //! ```rust
 //! let editorconfig_path = "tests/test_data/.editorconfig";
 //!
@@ -16,8 +17,8 @@
 //! ```
 //!
 //!
-//! This crate only parses and returns the values, it does not impose any implementation details on the editor
+//! This crate only parses keys and returns the values, it does not impose any implementation details on the editor.
 //!
-//! The file must be provided to the parser, it does not search the filesystem.
+//! The editorconfig file must be provided to the parser, it does not search the file system.
 
 pub mod parser;
