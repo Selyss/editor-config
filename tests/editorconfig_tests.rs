@@ -86,4 +86,15 @@ mod tests {
         let editorconfig: EditorConfig = editorconfig_str.parse().unwrap();
         assert_eq!(editorconfig.get_property("*", "indent_size"), None);
     }
+
+    #[test]
+    fn test_wrong_value_type() {
+        let editorconfig_str = r#"
+            [*]
+            indent_style = cool
+        "#;
+
+        let editorconfig: EditorConfig = editorconfig_str.parse().unwrap();
+        assert_eq!(editorconfig.get_property("*", "indent_style"), None,);
+    }
 }
