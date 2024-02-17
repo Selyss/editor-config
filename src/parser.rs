@@ -3,6 +3,20 @@ use std::collections::HashMap;
 use std::fs;
 use std::str::FromStr;
 
+#[allow(dead_code)]
+#[derive(Debug, PartialEq)]
+pub enum Section {
+    IndentStyle(String),
+    IndentSize(String), // can have value tab
+    TabWidth(u32),
+    EndOfLine(String),
+    Charset(String),
+    TrimTrailingWhitespace(bool),
+    InsertFinalNewline(bool),
+    MaxLineLength(String), // limited support
+                           // Root(bool),
+}
+
 pub struct EditorConfig {
     pub config: HashMap<String, HashMap<String, String>>,
 }
@@ -16,6 +30,17 @@ impl EditorConfig {
         self.config
             .get(section)
             .and_then(|props| props.get(property))
+            .and_then(|value| validate_property(property, value))
+    }
+}
+
+fn validate_property<'a>(property: &str, value: &'a String) -> Option<&'a String> {
+    match property {
+        "tab_width" => value.parse::<u32>().ok().map(|_| value),
+        "trim_trailing_whitespace" | "insert_final_newline" | "root" => {
+            value.parse::<bool>().ok().map(|_| value)
+        }
+        _ => Some(value),
     }
 }
 
