@@ -19,7 +19,7 @@
 //!
 //! let editorconfig = EditorConfig::from_file(editorconfig_path).unwrap();
 //!
-//! assert_eq!(editorconfig.get_property("*", "end_of_line"), Some("lf"));
+//! assert_eq!(editorconfig.get_property("*", "end_of_line"), Some(String::from("lf")));
 //! ```
 //!
 //! This crate only parses keys and returns the values, it does not impose any implementation details on the editor.
